@@ -16,13 +16,13 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.10.9",
     "mongoose-unique-validator": "^2.0.3",
-    "morgan": "^1.10.0",
-    "path": "^0.12.7"
+    "morgan": "^1.10.0"
   },
   "devDependencies": {},
   "scripts": {
     "start": "node app.js",
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "author": "Dima Kaddah",
   "license": "ISC"
