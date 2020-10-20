@@ -1,4 +1,4 @@
-const path = require("path");
+const path = require('path');
 const express = require('express');
 const app = express();
 const morgan = require('morgan');
@@ -40,12 +40,13 @@ app.use('/api', userRoute);
 //   });
 // }
 // app.user(express.static(path.join(__dirname, '/client/build')));
-app.get('/*', function (req, res) {
+app.get('*', function (req, res) {
   res.sendFile(path.resolve(__dirname, './client', 'build', 'index.html'));
 });
-// app.use((req, res, next) => {
-//   res.sendFile(path.resolve(__dirname, '../quiz-app-frontend/build', 'index.html'));
-// });
+
+app.use((req, res, next) => {
+  res.sendFile(path.resolve(__dirname, '../quiz-app-frontend/build', 'index.html'));
+});
 
 //server listen
 const port = process.env.PORT || 5000;
