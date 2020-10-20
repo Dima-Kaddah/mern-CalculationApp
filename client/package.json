@@ -14,8 +14,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "cd quiz-app-frontend && npm run build",
-    "install-quiz-app-frontend": "cd quiz-app-frontend && install",
-    "heroku-postbuild": "npm run install-quiz-app-frontend && npm run build",
+    "install-client": "cd client && install",
+    "heroku-postbuild": "npm run install-client && npm run build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
