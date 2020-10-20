@@ -31,22 +31,13 @@ app.use('/api', questionRoute);
 app.use('/api', answerRoute);
 app.use('/api', userRoute);
 
-// if (process.env.NODE_ENV === 'production') {
-//   app.use(express.static('quiz-app-frontend/build'));
-//   // Any request that enters will be served the React app
-
-//   app.get('*', (req, res) => {
-//     res.sendFile(path.resolve(__dirname, '../quiz-app-frontend', 'build', 'index.html'));
-//   });
-// }
-// app.user(express.static(path.join(__dirname, '/client/build')));
-app.get('*', function (req, res) {
-  res.sendFile(path.resolve(__dirname, './client', 'build', 'index.html'));
-});
-
-app.use((req, res, next) => {
-  res.sendFile(path.resolve(__dirname, '../quiz-app-frontend/build', 'index.html'));
-});
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('/client/build'));
+  // Any request that enters will be served the React app
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+}
 
 //server listen
 const port = process.env.PORT || 5000;
