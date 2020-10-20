@@ -3,6 +3,7 @@ const express = require('express');
 const app = express();
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
+const favicon = require('express-favicon');
 const connectDB = require('./util/connectDB');
 const questionRoute = require('./routes/questionRoute');
 const answerRoute = require('./routes/answerRoute');
@@ -29,15 +30,19 @@ app.use('/api', questionRoute);
 app.use('/api', answerRoute);
 app.use('/api', userRoute);
 
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('quiz-app-frontend/build'));
-  // Any request that enters will be served the React app
+// if (process.env.NODE_ENV === 'production') {
+//   app.use(express.static('quiz-app-frontend/build'));
+//   // Any request that enters will be served the React app
 
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '../quiz-app-frontend', 'build', 'index.html'));
-  });
-}
-
+//   app.get('*', (req, res) => {
+//     res.sendFile(path.resolve(__dirname, '../quiz-app-frontend', 'build', 'index.html'));
+//   });
+// }
+app.use(favicon(__dirname + '/client/public/favicon.ico'));
+app.user(express.static(path.join(__dirname, '/client/build')));
+app.get('/*', function (req, res) {
+  res.sendFile(path.resolve(__dirname, './client', 'build', 'index.html'));
+});
 // app.use((req, res, next) => {
 //   res.sendFile(path.resolve(__dirname, '../quiz-app-frontend/build', 'index.html'));
 // });
