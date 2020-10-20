@@ -12,10 +12,8 @@
     "react-scripts": "3.4.3"
   },
   "scripts": {
-    "start": "node app.js",
-    "build": "cd client && npm run build",
-    "install-client": "cd client && install",
-    "heroku-postbuild": "npm run install-client && npm run build",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
