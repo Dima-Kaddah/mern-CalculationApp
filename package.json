@@ -1,5 +1,5 @@
 {
-  "name": "quiz-app-backend",
+  "name": "mern-calculation-app",
   "version": "1.0.0",
   "description": "quiz-app-backend",
   "main": "app.js",
@@ -10,13 +10,16 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
+    "crypto": "^1.0.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-favicon": "^2.0.1",
+    "express-validator": "^6.6.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.10.9",
     "mongoose-unique-validator": "^2.0.3",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "uuidv1": "^1.6.14"
   },
   "devDependencies": {},
   "scripts": {
@@ -25,5 +28,13 @@
     "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "author": "Dima Kaddah",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dima-Kaddah/mern-CalculationApp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Dima-Kaddah/mern-CalculationApp/issues"
+  },
+  "homepage": "https://github.com/Dima-Kaddah/mern-CalculationApp#readme"
 }
