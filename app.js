@@ -2,7 +2,6 @@ const path = require('path');
 const express = require('express');
 const app = express();
 const morgan = require('morgan');
-const bodyParser = require('body-parser');
 const favicon = require('express-favicon');
 const connectDB = require('./util/connectDB');
 const questionRoute = require('./routes/questionRoute');
@@ -11,7 +10,7 @@ const userRoute = require('./routes/userRouts');
 
 //middleware
 app.use(morgan('dev')); //give route in console//good for development
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(favicon(__dirname + '/client/public/favicon.ico'));
 
 //middleware to allow connect between 3000,5000 servers// its open to any domain//set more headers//for CORS cross origin resorse shearing error... that the requset must be from same sever .... this code bellow make the access

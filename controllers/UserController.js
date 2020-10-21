@@ -1,34 +1,31 @@
-// const Questions = require('../models/Questions');
-const User = require('./../models/User');
-// const HttpError = require('./../helpers/HttpError.js');
+const { validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-
-// signup user
+const HttpError = require('../helpers/HttpError');
+const User = require('../models/User');
 
 const signUp = async (req, res, next) => {
-  // const errors = validationResult(req);
-  // if (!errors.isEmpty()) {
-  //   const error = new HttpError('Make sure to pass in the correct data!', 422);
-  //   return next(error);
-  // }
-  const { name, password } = req.body;
-
-  let nameExists;
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return next(
+      new HttpError('Invalid inputs passed, please check your data.', 422)
+    );
+  }
+  const { name, email, password, role } = req.body;
+  let existingUser;
   try {
-    // Check if email already exists
-    nameExists = await User.findOne({ name });
+    existingUser = await User.findOne({ email });
   } catch (err) {
     const error = new HttpError(
-      'Something went wrong, could not create user!',
+      'Signing up failed, please try again later.',
       500
     );
     return next(error);
   }
 
-  if (nameExists) {
+  if (existingUser) {
     const error = new HttpError(
-      'Name already exists, please login instead!',
+      'User exists already, please login instead.',
       422
     );
     return next(error);
@@ -36,55 +33,102 @@ const signUp = async (req, res, next) => {
 
   let hashedPassword;
   try {
-    // Hash password
-    hashedPassword = await hashPassword(password);
+    hashedPassword = await bcrypt.hash(password, 12);
   } catch (err) {
     const error = new HttpError(
-      'Something went wrong, could not create user!',
+      'Could not create user, please try again.',
       500
     );
     return next(error);
   }
 
-  if (!hashedPassword || hashedPassword === password) {
-    const error = new HttpError(
-      'Something went wrong, could not hash password!',
-      500
-    );
-    return next(error);
-  }
-
-  // Create new user
-  const newUser = new User({
+  const createdUser = new User({
     name,
+    email,
     password: hashedPassword,
+    role,
   });
+
+  try {
+    await createdUser.save();
+
+  } catch (err) {
+    const error = new HttpError(
+      'Signing up failed, please try again later.',
+      500
+    );
+    return next(error);
+  }
 
   let token;
   try {
-    // Save user
-    await newUser.save();
-
-    // Create an authentication token
     token = jwt.sign(
-      { userId: newUser.id, email: newUser.email },
+      { userId: createdUser.id, email: createdUser.email },
       process.env.JWT_SECRET,
       { expiresIn: '1h' }
     );
   } catch (err) {
     const error = new HttpError(
-      'Something went wrong, could not create user!',
+      'Signing up failed, please try again later.',
       500
     );
     return next(error);
   }
 
-  const modifiedUser = newUser.toObject({ getters: true });
-
   res
     .status(201)
-    .json({ userId: modifiedUser.id, name: modifiedUser.name, token });
+    .json({ userId: createdUser.id, email: createdUser.email, name: createdUser.name, role: createdUser.role, token: token });
 };
 
+//login user
+const logIn = async (req, res, next) => {
+  const { email, password } = req.body;
+
+  let identifiedUser;
+  let isPasswordCorrect;
+  try {
+    // Check if user exists
+    identifiedUser = await User.findOne({ email });
+    isPasswordCorrect = await bcrypt.compare(
+      password,
+      identifiedUser.password
+    );
+  } catch (err) {
+    const error = new HttpError(
+      'Something went wrong, check your credentials and try again!',
+      500
+    );
+    return next(error);
+  }
+
+  if (!identifiedUser || !isPasswordCorrect) {
+    const error = new HttpError('Credentials are incorrect!', 403);
+    return next(error);
+  }
+
+  let token;
+  try {
+    token = jwt.sign(
+      { userId: identifiedUser.id, email: identifiedUser.email },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: '1h',
+      }
+    );
+  } catch (err) {
+    const error = new HttpError(
+      'Something went wrong, check your credentials and try again!',
+      500
+    );
+    return next(error);
+  }
+
+  const modifiedUser = identifiedUser.toObject({ getters: true });
+  res
+    .status(200)
+    .json({ userId: modifiedUser.id, email: modifiedUser.email, role: modifiedUser.role, name: modifiedUser.name, token });
+};
+
+
 exports.signUp = signUp;
-// exports.logIn = logIn;
+exports.logIn = logIn;
