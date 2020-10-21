@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const HttpError = require('../helpers/HttpError');
 const User = require('../models/User');
 
+//signUp user
 const signUp = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -74,10 +75,10 @@ const signUp = async (req, res, next) => {
     );
     return next(error);
   }
-
+  const modifiedUser = createdUser.toObject({ getters: true });
   res
     .status(201)
-    .json({ userId: createdUser.id, email: createdUser.email, name: createdUser.name, role: createdUser.role, token: token });
+    .json({ userId: modifiedUser.id, email: modifiedUser.email, name: modifiedUser.name, role: modifiedUser.role, token: token });
 };
 
 //login user
