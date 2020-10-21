@@ -8,18 +8,21 @@ import './HomePage.css';
 const HomePage = () => (
   <Fragment>
     <Helmet><title>Math-Quiz App - Home</title></Helmet>
-    <section>
+    <div className='card'>
       <div style={{ textAlign: 'center' }}>
         <LightBulbOn color="orange" size={'8rem'} />
       </div>
-      <h1>Math Quiz App</h1>
+      <h1>Welcome to Math Quiz App</h1>
       <div style={{ textAlign: 'center' }}>
         <img src={mathGif} alt="light" />
       </div>
-      <div className='start-btn-container'>
-        <Link to='/QuestionCard' className='start-btn btn'>Start</Link>
+      <div className='signup-btn-container'>
+        <Link to='/signup' className='signup-btn btn' >SignUp</Link>
       </div>
-    </section>
+      <div className='login-btn-container'>
+        <Link to='/login' className='login-btn btn' >LogIn</Link>
+      </div>
+    </div>
   </Fragment >
 );
 
