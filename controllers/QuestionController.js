@@ -4,11 +4,11 @@ const bcrypt = require('bcryptjs');
 
 const createQuestion = async (req, res, next) => {
 
-  const { index, question, answer } = req.body;
+  const { index, question, answer, role } = req.body;
 
   let existQuestion;
   try {
-    existQuestion = await Questions.findOne({ index });
+    existQuestion = await Questions.findOne({ question });
   } catch (err) {
     const error = new HttpError(
       'Something went wrong, Question alreaady exist!',
@@ -40,6 +40,7 @@ const createQuestion = async (req, res, next) => {
     index,
     question,
     answer: hashedAnswer,
+    role
   });
 
   try {
