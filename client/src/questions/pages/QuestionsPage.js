@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState, useEffect, useContext } from 'react';
 import { Helmet } from 'react-helmet';
 import Form from '../components/Form';
 import useHttpClient from '../../hooks/http-hook';
@@ -9,6 +9,7 @@ import loseGif from '../../images/giphy/youLose.gif';
 import youWinGif from '../../images/giphy/youWin.gif';
 import LoadingGif from '../../images/giphy/loading.gif';
 import ErrorGif from '../../images/giphy/error.gif';
+import { LevelContext } from '../../shared/Level-context';
 
 const QuestionsPage = () => {
   const [answer, setAnswer] = useState('');
@@ -22,7 +23,7 @@ const QuestionsPage = () => {
   const [gifLose, setGifLose] = useState(false);
   const [gifWIn, setGifWin] = useState(false);
 
-
+  const { gameLevel, setGameLevel } = useContext(LevelContext);
   const { isLoading, error, sendRequest } = useHttpClient();
 
   const getQuestion = async (url) => {
@@ -60,6 +61,7 @@ const QuestionsPage = () => {
 
     } else if (checkAnswer.answer === true && checkAnswer.rightCount <= 5) {
       setGifWin(true);
+      setGameLevel('');
 
     } else if (checkAnswer.answer === false && checkAnswer.triesCount < 3) {
       setGifTryAgain(true);
@@ -67,6 +69,7 @@ const QuestionsPage = () => {
 
     } else if (checkAnswer.answer === false && wrongAnswer <= 3) {
       setGifLose(true);
+      setGameLevel('');
 
     }
 
@@ -104,7 +107,7 @@ const QuestionsPage = () => {
 
         {questions.length && !isLoading && !gifCorrect && !gifTryAgain && !gifLose && !gifWIn && (
           <React.Fragment>
-            <h1>Math Quiz App</h1>
+            <h1>Math Quiz App {gameLevel}</h1>
             <h1>Question {questions[index].index}/{questions.length} </h1>
             <div key={questions[index]._id}>
               <div className='questionData'>{`${questions[index].question}`}
