@@ -54,12 +54,15 @@ const createQuestion = async (req, res, next) => {
   res.status(201).json({ NewQuestion });
 };
 
-//get all questions
+// get all questions
 const getQuestions = async (req, res, next) => {
+
+  const { role } = req.body;
+
   let questions;
 
   try {
-    questions = await Questions.find({}, '-answer');
+    questions = await Questions.find({ role }, '-answer');
     // const randomNum = Math.floor(Math.random() * 5);
     // const get5Question = questions.splice(randomNum, 1);
     res.status(200).json(questions);
@@ -70,5 +73,20 @@ const getQuestions = async (req, res, next) => {
   }
 };
 
+// // get all questions; stander
+// const getQuestions = async (req, res, next) => {
+//   let questions;
+
+//   try {
+//     questions = await Questions.find({}, '-answer');
+//     // const randomNum = Math.floor(Math.random() * 5);
+//     // const get5Question = questions.splice(randomNum, 1);
+//     res.status(200).json(questions);
+
+//   } catch (err) {
+//     const error = new HttpError(err);
+//     return next(error);
+//   }
+// };
 exports.createQuestion = createQuestion;
 exports.getQuestions = getQuestions;

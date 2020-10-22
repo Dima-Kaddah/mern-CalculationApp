@@ -8,11 +8,11 @@ import SignUpPage from './user/components/SignUpPage';
 import LogInPage from './user/components/LogInPage';
 import { AuthContext } from './shared/Ath-context';
 import { LevelContext } from './shared/Level-context.js';
-const QuestionsPage = React.lazy(() => import('./questions/pages/QuestionsPage.js'));
+const QuestionPage = React.lazy(() => import('./questions/pages/QuestionsPage.js'));
 
 const App = () => {
   const [token, setToken] = useState(false);
-  const [gameLevel, setGameLevel] = useState('');
+  const [gameLevel, setGameLevel] = useState('EASY');
 
   const login = useCallback((token) => {
     setToken(token);
@@ -34,7 +34,7 @@ const App = () => {
     routes = (
       <Switch>
         <Route exact path='/play' component={PlayStartPage} />
-        <Route exact path='/QuestionCard' component={QuestionsPage} />
+        <Route exact path='/QuestionCard' component={QuestionPage} />
         {/* <Redirect to="/play" /> */}
         <Route exact path='/' component={HomePage} />
         <Route exact path='/signup' component={SignUpPage} />

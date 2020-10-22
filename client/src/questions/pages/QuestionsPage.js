@@ -1,6 +1,7 @@
 import React, { Fragment, useState, useEffect, useContext } from 'react';
 import { Helmet } from 'react-helmet';
 import Form from '../components/Form';
+import { Link } from 'react-router-dom';
 import useHttpClient from '../../hooks/http-hook';
 import './QuestionsPage.css';
 import RightAnswer from '../../images/giphy/RightAnswer.gif';
@@ -11,7 +12,7 @@ import LoadingGif from '../../images/giphy/loading.gif';
 import ErrorGif from '../../images/giphy/error.gif';
 import { LevelContext } from '../../shared/Level-context';
 
-const QuestionsPage = () => {
+const QuestionPage = () => {
   const [answer, setAnswer] = useState('');
   const [questions, setQuestions] = useState([]);
   const [index, setIndex] = useState(0);
@@ -27,9 +28,32 @@ const QuestionsPage = () => {
   const { isLoading, error, sendRequest } = useHttpClient();
 
   const getQuestion = async (url) => {
-    const data = await sendRequest(url);
-    setQuestions(data);
+    // const data = await sendRequest(url);
+
+    const body = { role: gameLevel };
+
+    const request = {
+      method: "POST",
+      body: JSON.stringify(body),
+      headers: { "Content-Type": "application/json" },
+    };
+
+    let data;
+    try {
+      data = await sendRequest(
+        url,
+        request.method,
+        request.body,
+        request.headers
+      );
+
+      setQuestions(data);
+
+    } catch (err) {
+      console.log({ error }, err);
+    }
   };
+
   const postAnswer = async () => {
     const url = `${process.env.REACT_APP_BACKEND_URL}/checkAnswer`;
     const body = {
@@ -54,26 +78,26 @@ const QuestionsPage = () => {
     } catch (err) {
       console.log("can't get answer", err);
     }
-    if (checkAnswer.answer === true && checkAnswer.rightCount < 5) {
+    if (checkAnswer.answer === true && checkAnswer.rightCount < 4) {
       setCorrectAnswer(correctAnswer + 1);
       setIndex(index + 1);
       setGifCorrect(true);
 
-    } else if (checkAnswer.answer === true && checkAnswer.rightCount <= 5) {
+    } else if (checkAnswer.answer === true && checkAnswer.rightCount <= 4) {
       setGifWin(true);
-      setGameLevel('');
+      setCorrectAnswer(correctAnswer + 1);
+      setGameLevel('EASY');
 
-    } else if (checkAnswer.answer === false && checkAnswer.triesCount < 3) {
+    } else if (checkAnswer.answer === false && checkAnswer.triesCount < 2) {
       setGifTryAgain(true);
       setWrongAnswer(wrongAnswer + 1);
 
-    } else if (checkAnswer.answer === false && wrongAnswer <= 3) {
+    } else if (checkAnswer.answer === false && wrongAnswer <= 2) {
       setGifLose(true);
-      setGameLevel('');
+      setWrongAnswer(wrongAnswer + 1);
+      setGameLevel('EASY');
 
     }
-
-
   };
   useEffect(() => {
     getQuestion(`${process.env.REACT_APP_BACKEND_URL}/allQuestions`);
@@ -102,13 +126,30 @@ const QuestionsPage = () => {
         {error && <img src={ErrorGif} alt="Error" />}
         {gifCorrect && <img src={RightAnswer} alt="correct" />}
         {gifTryAgain && <img src={tryAgain} alt="tryAgain" />}
-        {gifLose && <img src={loseGif} alt="lose" />}
-        {gifWIn && <img src={youWinGif} alt="win" />}
+        {gifLose &&
+          <div>
+            <div>
+              <h1>{wrongAnswer} Wrong Answer Play again <Link to='/play' className='playAgain'>Play Again</Link></h1>
+            </div>
+            <img src={loseGif} alt="lose" />
+          </div>}
+        {gifWIn && <div>
+          <div>
+            <h1>{correctAnswer} Correct answers GOOD JOB <Link to='/play' className='playAgain'>Play Again</Link></h1>
+          </div>
+          <img src={youWinGif} alt="win" />
+        </div>
+        }
 
         {questions.length && !isLoading && !gifCorrect && !gifTryAgain && !gifLose && !gifWIn && (
           <React.Fragment>
             <h1>Math Quiz App {gameLevel}</h1>
             <h1>Question {questions[index].index}/{questions.length} </h1>
+            <div className='countBoard'>
+              <h2>Correct:{correctAnswer}</h2>
+              <h2>Wrong:{wrongAnswer}</h2>
+            </div>
+
             <div key={questions[index]._id}>
               <div className='questionData'>{`${questions[index].question}`}
               </div>
@@ -122,6 +163,4 @@ const QuestionsPage = () => {
   );
 
 };
-export default QuestionsPage;
-
-
+export default QuestionPage;
