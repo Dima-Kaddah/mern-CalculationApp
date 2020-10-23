@@ -18,8 +18,15 @@ const App = () => {
   const { token, login, role, logout } = useAuth();
 
   let routes;
-
-  if (token && role === 0) {
+  if (role === 1) {
+    routes = (
+      <Switch>
+        <Route exact path='/addQuestions' component={QuestionAdmin} />
+        <Route exact path='/newQuestion' component={NewQuestion} />
+        <Redirect to='/addQuestions' />
+      </Switch>
+    );
+  } else if (token && role === 0) {
     routes = (
       <Switch>
         <Route exact path='/play' component={PlayStartPage} />
@@ -36,16 +43,8 @@ const App = () => {
         <Redirect to='/' />
       </Switch>
     );
-  } else if (role === 1) {
-    routes = (
-      <Switch>
-        <Route exact path='/addQuestions' component={QuestionAdmin} />
-        <Route exact path='/newQuestion' component={NewQuestion} />
-        <Redirect to='/addQuestions' />
-      </Switch>
-    );
-
   }
+
   return (
     <LevelContext.Provider value={{ gameLevel, setGameLevel }}>
       <AuthContext.Provider value={{ isLoggedIn: !!token, token: token, login: login, logout: logout }}>
