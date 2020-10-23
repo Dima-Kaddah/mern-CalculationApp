@@ -83,3 +83,8 @@ Calculation Quiz App with MERN stack
 # License
 
    - **ISC**
+   
+# Author:
+- **[Dima](https://github.com/Dima-Kaddah)**
+
+
