@@ -10,23 +10,23 @@ Calculation Quiz App with MERN stack
                                                                                                                                
                                                                                                                               
 ### :bust_in_silhouette: signUp  
-  <img src="https://github.com/Dima-Kaddah/mern-CalculationApp/blob/master/client/src/images/REDME-IMAGES/signUpPage.jpg" width="800"/></p>
+  <p align="center"><img src="https://github.com/Dima-Kaddah/mern-CalculationApp/blob/master/client/src/images/REDME-IMAGES/signUpPage.jpg" width="800"/></p>
 
 
 ### :game_die: Select level       
-  <img src="https://github.com/Dima-Kaddah/mern-CalculationApp/blob/master/client/src/images/REDME-IMAGES/playPage-level.jpg" width="800"/></p>
+  <p align="center"><img src="https://github.com/Dima-Kaddah/mern-CalculationApp/blob/master/client/src/images/REDME-IMAGES/playPage-level.jpg" width="800"/></p>
 
 
 ### :video_game: Play        
-  <img src="https://github.com/Dima-Kaddah/mern-CalculationApp/blob/master/client/src/images/REDME-IMAGES/questionCard.jpg" width="800"/></p>
+  <p align="center"><img src="https://github.com/Dima-Kaddah/mern-CalculationApp/blob/master/client/src/images/REDME-IMAGES/questionCard.jpg" width="800"/></p>
 
 
 ### :tada: WIN 
-  <img src="https://github.com/Dima-Kaddah/mern-CalculationApp/blob/master/client/src/images/giphy/youWin.gif" width="800"/></p>
+  <p align="center"><img src="https://github.com/Dima-Kaddah/mern-CalculationApp/blob/master/client/src/images/giphy/youWin.gif" width="800"/></p>
 
 
 ### :sob: Lose 
-  <img src="https://github.com/Dima-Kaddah/mern-CalculationApp/blob/master/client/src/images/giphy/youLose.gif" width="800"/></p>
+  <p align="center"><img src="https://github.com/Dima-Kaddah/mern-CalculationApp/blob/master/client/src/images/giphy/youLose.gif" width="800"/></p>
 
 
 
