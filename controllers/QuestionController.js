@@ -55,7 +55,7 @@ const createQuestion = async (req, res, next) => {
 };
 
 // get all questions
-const getQuestions = async (req, res, next) => {
+const getQuestionsByLevel = async (req, res, next) => {
 
   const { role } = req.body;
 
@@ -63,9 +63,9 @@ const getQuestions = async (req, res, next) => {
 
   try {
     questions = await Questions.find({ role }, '-answer');
-    // const randomNum = Math.floor(Math.random() * 5);
+    const only5Questions = questions.slice(0, 5);
     // const get5Question = questions.splice(randomNum, 1);
-    res.status(200).json(questions);
+    res.status(200).json(only5Questions);
 
   } catch (err) {
     const error = new HttpError(err);
@@ -73,10 +73,9 @@ const getQuestions = async (req, res, next) => {
   }
 };
 
-// // get all questions; stander
-// const getQuestions = async (req, res, next) => {
+// // get all questions
+// const getAllQuestions = async (req, res, next) => {
 //   let questions;
-
 //   try {
 //     questions = await Questions.find({}, '-answer');
 //     // const randomNum = Math.floor(Math.random() * 5);
@@ -89,4 +88,4 @@ const getQuestions = async (req, res, next) => {
 //   }
 // };
 exports.createQuestion = createQuestion;
-exports.getQuestions = getQuestions;
+exports.getQuestionsByLevel = getQuestionsByLevel;

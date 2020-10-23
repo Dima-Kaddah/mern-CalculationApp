@@ -17,16 +17,16 @@ app.use(favicon(__dirname + '/client/public/favicon.ico'));
 
 //middleware to allow connect between 3000,5000 servers// its open to any domain//set more headers//for CORS cross origin resorse shearing error... that the requset must be from same sever .... this code bellow make the access
 
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept, Authorization',
-  );
-  res.setHeader('Access-Control-Allow-Methods', 'GET, PUT, POST, PATCH, DELETE');
+// app.use((req, res, next) => {
+//   res.setHeader('Access-Control-Allow-Origin', '*');
+//   res.setHeader(
+//     'Access-Control-Allow-Headers',
+//     'Origin, X-Requested-With, Content-Type, Accept, Authorization',
+//   );
+//   res.setHeader('Access-Control-Allow-Methods', 'GET, PUT, POST, PATCH, DELETE');
 
-  next(); // to let complete journey to other middlewares :)
-});
+//   next(); // to let complete journey to other middlewares :)
+// });
 
 //routes
 app.use('/api', questionRoute);
@@ -36,9 +36,8 @@ app.use('/api', userRoute);
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('./client/build'));
   // Any request that enters will be served the React app
-
   app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, './client', 'build', 'index.html'));
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
   });
 }
 
