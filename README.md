@@ -1,4 +1,5 @@
 # mern-CalculationApp
 Calculation Quiz App with MERN stack
 - [Math Quiz App](https://quizmathapp.herokuapp.com/)
-## this project is MERN stack :bulb:
+## This project is MERN stack :bulb:
+![:house: Page](images/REDME-IMAGES/homepage.jpg)
