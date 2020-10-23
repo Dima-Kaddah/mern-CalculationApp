@@ -47,7 +47,7 @@ const App = () => {
 
   return (
     <LevelContext.Provider value={{ gameLevel, setGameLevel }}>
-      <AuthContext.Provider value={{ isLoggedIn: !!token, token: token, login: login, logout: logout }}>
+      <AuthContext.Provider value={{ isLoggedIn: !!token, token: token, login: login, logout: logout, role: role }}>
         <Suspense fallback={<img src={LoadingGif} alt="Loading" />}>
           <Router>
             {routes}
