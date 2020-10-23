@@ -80,6 +80,10 @@
 Calculation Quiz App with MERN stack
 - [Math Quiz App](https://quizmathapp.herokuapp.com/)
 
+  ## for test admin routes:
+  - email : testadmin@app.com
+  - password : test1234
+
 # License
 
    - **ISC**
