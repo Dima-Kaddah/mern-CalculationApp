@@ -1,6 +1,6 @@
 # MERN stack Quiz Application :bulb: 
 
-## MERN Stack MathQuizApp is built with a collection of JavaScript based technologies from Client to Server to Database. This repository contains the code for a RESTful API that was built using the MEAN stack:
+## MERN Stack MathQuizApp is built with a collection of JavaScript based technologies from Client to Server to Database. This repository contains the code for a RESTful API and React frontend *Client* folder that was built using the MERN stack:
 
 - MongoDB
 - Express
