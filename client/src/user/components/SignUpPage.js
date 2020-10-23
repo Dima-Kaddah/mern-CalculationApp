@@ -7,6 +7,10 @@ import useHttpClient from '../../hooks/http-hook';
 import { AuthContext } from '../../shared/Ath-context';
 import LoadingGif from '../../images/giphy/loading.gif';
 import ErrorGif from '../../images/giphy/error.gif';
+import {
+  VALIDATOR_MINLENGTH,
+  VALIDATOR_EMAIL,
+} from '../../shared/validarors';
 
 const SignUpPage = () => {
   const auth = useContext(AuthContext);
@@ -41,9 +45,7 @@ const SignUpPage = () => {
         request.headers
       );
 
-      console.log(createUser);
-
-      auth.login(createUser.userId, createUser.token);
+      auth.login(createUser.userId, createUser.role, createUser.token);
 
     } catch (err) {
       console.log("can't create user", err);
@@ -63,8 +65,8 @@ const SignUpPage = () => {
             <h1>Welcome to Math Quiz App</h1>
             <form onSubmit={authSubmitHndler}>
               <input type="name" name='name' placeholder='name' value={values.name || ''} onChange={handleChange} className='inputForm' autoFocus />
-              <input type="email" name='email' placeholder='email' value={values.email || ''} onChange={handleChange} className='inputForm' />
-              <input type="password" name='password' placeholder='password' value={values.password || ''} onChange={handleChange} className='inputForm' />
+              <input type="email" name='email' placeholder='email' value={values.email || ''} onChange={handleChange} className='inputForm' validators={[VALIDATOR_EMAIL()]} />
+              <input type="password" name='password' placeholder='password' value={values.password || ''} onChange={handleChange} className='inputForm' validator={[VALIDATOR_MINLENGTH(6)]} />
               <div className='signup-btn-container'>
                 <button type='submit' className='signup-btn btn'>SignUp</button>
               </div>

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import LightBulbOn from 'mdi-react/LightbulbOnOutlineIcon';
 import './PlayStartPage.css';
 import { LevelContext } from '../../shared/Level-context';
+import LogoutBtn from './../components/LogoutBtn';
 
 const PlayStartPage = () => {
   const { gameLevel, setGameLevel } = useContext(LevelContext);
@@ -25,7 +26,8 @@ const PlayStartPage = () => {
     <Fragment>
       <Helmet><title>Math-Quiz App - play/level</title></Helmet>
       <section>
-        <h1>Select<LightBulbOn color="orange" size={'8rem'} /> Level</h1>
+        <LogoutBtn />
+        <h1>Select<LightBulbOn color="orange" size={'5rem'} />Level</h1>
         <form onSubmit={fetchLevel}>
           <select className='select' onChange={onChangeHandler}>
             <option className='select' value="EASY">EASY</option>

@@ -10,6 +10,7 @@ import loseGif from '../../images/giphy/youLose.gif';
 import youWinGif from '../../images/giphy/youWin.gif';
 import LoadingGif from '../../images/giphy/loading.gif';
 import ErrorGif from '../../images/giphy/error.gif';
+import LogoutBtn from './../components/LogoutBtn';
 import { LevelContext } from '../../shared/Level-context';
 
 const QuestionPage = () => {
@@ -28,8 +29,6 @@ const QuestionPage = () => {
   const { isLoading, error, sendRequest } = useHttpClient();
 
   const getQuestion = async (url) => {
-    // const data = await sendRequest(url);
-
     const body = { role: gameLevel };
 
     const request = {
@@ -86,7 +85,7 @@ const QuestionPage = () => {
     } else if (checkAnswer.answer === true && checkAnswer.rightCount <= 4) {
       setGifWin(true);
       setCorrectAnswer(correctAnswer + 1);
-      setGameLevel('EASY');
+      setGameLevel('');
 
     } else if (checkAnswer.answer === false && checkAnswer.triesCount < 2) {
       setGifTryAgain(true);
@@ -95,12 +94,12 @@ const QuestionPage = () => {
     } else if (checkAnswer.answer === false && wrongAnswer <= 2) {
       setGifLose(true);
       setWrongAnswer(wrongAnswer + 1);
-      setGameLevel('EASY');
+      setGameLevel('');
 
     }
   };
   useEffect(() => {
-    getQuestion(`${process.env.REACT_APP_BACKEND_URL}/allQuestions`);
+    getQuestion(`${process.env.REACT_APP_BACKEND_URL}/gameQuestions`);
   }, [index]);
 
   useEffect(() => {
@@ -121,7 +120,7 @@ const QuestionPage = () => {
   return (
     <Fragment>
       <Helmet><title> math-Quiz App - play </title></Helmet>
-      <div className='card'>
+      <section className='card'>
         {isLoading && <img src={LoadingGif} alt="Loading" />}
         {error && <img src={ErrorGif} alt="Error" />}
         {gifCorrect && <img src={RightAnswer} alt="correct" />}
@@ -143,11 +142,12 @@ const QuestionPage = () => {
 
         {questions.length && !isLoading && !gifCorrect && !gifTryAgain && !gifLose && !gifWIn && (
           <React.Fragment>
+            < LogoutBtn />
             <h1>Math Quiz App {gameLevel}</h1>
             <h1>Question {questions[index].index}/{questions.length} </h1>
             <div className='countBoard'>
-              <h2>Correct:{correctAnswer}</h2>
-              <h2>Wrong:{wrongAnswer}</h2>
+              <h2>Correct: {correctAnswer}</h2>
+              <h2>Wrong: {wrongAnswer}</h2>
             </div>
 
             <div key={questions[index]._id}>
@@ -158,7 +158,7 @@ const QuestionPage = () => {
           </React.Fragment>
         )
         }
-      </div>
+      </section>
     </Fragment >
   );
 
