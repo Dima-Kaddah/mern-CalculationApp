@@ -20,20 +20,21 @@
 
 1. Install dependencies from in both **client folder and mern-CalculationApp folder** using your command line:
 
-      **npm install** 
+    ### `npm install` 
       
 2. in command line **client** run the following command:
 
-      **npm start**
+   ### `npm start`
+   
       
 3. in command line **client** run following command:
 
-      **npm run dev**
+     ### `npm run dev`
       
 4. Then open your two browser go to:
 
-    - **http://localhost:5000**
-    - **http://localhost:3000**
+    - **`http://localhost:3000`** 
+    - **`http://localhost:5000`**
       
 ### :house: page 
 
