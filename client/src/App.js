@@ -18,7 +18,7 @@ const App = () => {
   const { token, login, role, logout } = useAuth();
 
   let routes;
-  if (role === 1) {
+  if (token && role === 1) {
     routes = (
       <Switch>
         <Route exact path='/addQuestions' component={QuestionAdmin} />
