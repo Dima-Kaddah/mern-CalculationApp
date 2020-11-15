@@ -5,7 +5,7 @@
 body {  
   background-color: #3c3434;
   background-image: url('./images/804211.jpg');
-  background-size: flex;
+  background-size: cover;
   background-position: center;
   display: flex;
   flex-direction: column;
