@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect, useContext } from 'react';
 import { Helmet } from 'react-helmet';
 import Form from '../components/Form';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import useHttpClient from '../../hooks/http-hook';
 import './QuestionsPage.css';
 import RightAnswer from '../../images/giphy/RightAnswer.gif';
@@ -85,7 +85,6 @@ const QuestionPage = () => {
     } else if (checkAnswer.answer === true && checkAnswer.rightCount <= 4) {
       setGifWin(true);
       setCorrectAnswer(correctAnswer + 1);
-      setGameLevel('');
 
     } else if (checkAnswer.answer === false && checkAnswer.triesCount < 2) {
       setGifTryAgain(true);
@@ -94,8 +93,6 @@ const QuestionPage = () => {
     } else if (checkAnswer.answer === false && wrongAnswer <= 2) {
       setGifLose(true);
       setWrongAnswer(wrongAnswer + 1);
-      setGameLevel('');
-
     }
   };
   useEffect(() => {
