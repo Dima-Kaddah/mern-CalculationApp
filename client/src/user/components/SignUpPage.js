@@ -7,20 +7,16 @@ import useHttpClient from '../../hooks/http-hook';
 import { AuthContext } from '../../shared/Ath-context';
 import LoadingGif from '../../images/giphy/loading.gif';
 import ErrorGif from '../../images/giphy/error.gif';
-import {
-  VALIDATOR_MINLENGTH,
-  VALIDATOR_EMAIL,
-} from '../../shared/validarors';
+import { validateSignUp } from '../../shared/validate';
+
 
 const SignUpPage = () => {
   const auth = useContext(AuthContext);
-  const [values, handleChange] = useForm();
+  const [values, handleChange, handlerSubmit, errors] = useForm(authSubmitHandler, validateSignUp);
 
   const { isLoading, error, sendRequest } = useHttpClient();
 
-  const authSubmitHndler = async (e) => {
-    e.preventDefault();
-
+  async function authSubmitHandler() {
     const url = `${process.env.REACT_APP_BACKEND_URL}/signup`;
 
     const body = {
@@ -51,6 +47,8 @@ const SignUpPage = () => {
       console.log("can't create user", err);
     }
   };
+
+
   return (
     <Fragment>
       {isLoading && <img src={LoadingGif} alt="Loading" />}
@@ -63,10 +61,13 @@ const SignUpPage = () => {
               <LightBulbOn color="orange" size={'8rem'} />
             </div>
             <h1>Welcome to Math Quiz App</h1>
-            <form onSubmit={authSubmitHndler}>
-              <input type="name" name='name' placeholder='name' value={values.name || ''} onChange={handleChange} className='inputForm' autoFocus />
-              <input type="email" name='email' placeholder='email' value={values.email || ''} onChange={handleChange} className='inputForm' validators={[VALIDATOR_EMAIL()]} />
-              <input type="password" name='password' placeholder='password' value={values.password || ''} onChange={handleChange} className='inputForm' validator={[VALIDATOR_MINLENGTH(6)]} />
+            <form onSubmit={handlerSubmit}>
+              <input type='name' name='name' placeholder='name' value={values.name || ''} onChange={handleChange} className={`${errors.name ? 'inputErr inputForm' : 'inputForm'}`} autoFocus />
+              {errors.name && <p className='valErr'>{errors.name}</p>}
+              <input type='email' name='email' placeholder='email' value={values.email || ''} onChange={handleChange} className={`${errors.email ? 'inputErr inputForm' : 'inputForm'}`} />
+              {errors.email && <p className='valErr'>{errors.email}</p>}
+              <input type='password' name='password' placeholder='password' value={values.password || ''} onChange={handleChange} className={`${errors.password ? 'inputErr inputForm' : 'inputForm'}`} />
+              {errors.password && <p className='valErr'>{errors.password}</p>}
               <div className='signup-btn-container'>
                 <button type='submit' className='signup-btn btn'>SignUp</button>
               </div>
@@ -78,5 +79,4 @@ const SignUpPage = () => {
   );
 };
 
-
-export default SignUpPage;
+export default SignUpPage;;
