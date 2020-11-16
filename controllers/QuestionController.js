@@ -24,6 +24,24 @@ const createQuestion = async (req, res, next) => {
     return next(error);
   }
 
+  let existIndex;
+  try {
+    existIndex = await Questions.findOne({ index, role });
+  } catch (err) {
+    const error = new HttpError(
+      'Something went wrong, question number (index) alreaady exist!',
+      500
+    );
+    return next(error);
+  }
+  if (existIndex) {
+    const error = new HttpError(
+      'Number already exists, please insert new Question Number!',
+      422
+    );
+    return next(error);
+  }
+
   let hashedAnswer;
   try {
     toHashAnswer = answer + process.env.BCRYPT_ANSWER;

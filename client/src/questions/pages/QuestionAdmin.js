@@ -7,17 +7,14 @@ import './QuestionsPage.css';
 import LogoutBtn from './../components/LogoutBtn';
 import LoadingGif from '../../images/giphy/loading.gif';
 import ErrorGif from '../../images/giphy/error.gif';
-
-// import {
-//   VALIDATOR_MINLENGTH,
-//   VALIDATOR_EMAIL,
-// } from '../../shared/validarors';
+import ErrorModal from '../../hooks/ErrorModal';
 
 const QuestionAdmin = () => {
   const [newQuestion, setNewQuestion] = useState({});
   const [values, handleChange] = useForm();
+  const [level, setLevel] = useState('SELECT LEVEL');
 
-  const { isLoading, error, sendRequest } = useHttpClient();
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   const history = useHistory();
 
@@ -30,7 +27,7 @@ const QuestionAdmin = () => {
       index: values.index,
       question: values.question,
       answer: values.answer,
-      role: values.role,
+      role: level,
     };
 
     const request = {
@@ -57,10 +54,14 @@ const QuestionAdmin = () => {
   };
   console.log(newQuestion);
 
+  const onChangeHandler = (e) => {
+    setLevel(e.target.value);
+  };
+
   return (
     <Fragment>
+      <ErrorModal error={error} onClear={clearError} />
       {isLoading && <img src={LoadingGif} alt="Loading" />}
-      {error && <img src={ErrorGif} alt="Error" />}
       {!isLoading && !error && (
         <Fragment>
           <Helmet><title>Math-Quiz App - Admin</title></Helmet>
@@ -68,10 +69,15 @@ const QuestionAdmin = () => {
             <LogoutBtn />
             <h1>Hello Admin! this is add Question page :)</h1>
             <form onSubmit={authSubmitHndler}>
-              <input type="number" name='index' placeholder='QNumber' value={values.index || ''} onChange={handleChange} className='inputForm' autoFocus />
-              <input type="text" name='question' placeholder='Question' value={values.question || ''} onChange={handleChange} className='inputForm' />
-              <input type="text" name='answer' placeholder='Answer' value={values.answer || ''} onChange={handleChange} className='inputForm' />
-              <input type="text" name='role' placeholder='Level' value={values.role || ''} onChange={handleChange} className='inputForm' />
+              <input type="number" name='index' placeholder='0' value={values.index || ''} onChange={handleChange} className='select' autoFocus />
+              <input type="text" name='question' placeholder='Question' value={values.question || ''} onChange={handleChange} className='select' />
+              <input type="text" name='answer' placeholder='Answer' value={values.answer || ''} onChange={handleChange} className='select' />
+              <select className='select' onChange={onChangeHandler}>
+                <option className='select' value='SELECT LEVEL'>SELECT LEVEL</option>
+                <option className='select' value='EASY'>EASY</option>
+                <option className='select' value='NORMAL'>NORMAL</option>
+                <option className='select' value='HARD'>HARD</option>
+              </select>
               <div className='signup-btn-container'>
                 <button type='submit' className='signup-btn btn'>Add Question</button>
               </div>
