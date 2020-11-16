@@ -6,14 +6,14 @@ import './SignUp-LogInPages.css';
 import useHttpClient from '../../hooks/http-hook';
 import { AuthContext } from '../../shared/Ath-context';
 import LoadingGif from '../../images/giphy/loading.gif';
-import ErrorGif from '../../images/giphy/error.gif';
 import { validateSignIn } from '../../shared/validate';
+import ErrorModal from '../../hooks/ErrorModal';
 
 const LogInPage = () => {
   const auth = useContext(AuthContext);
   const [values, handleChange, handlerSubmit, errors] = useForm(authSubmitHndler, validateSignIn);
 
-  const { isLoading, error, sendRequest } = useHttpClient();
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   async function authSubmitHndler() {
     const url = `${process.env.REACT_APP_BACKEND_URL}/login`;
@@ -48,8 +48,8 @@ const LogInPage = () => {
 
   return (
     <Fragment>
+      <ErrorModal error={error} onClear={clearError} />
       {isLoading && <img src={LoadingGif} alt="Loading" />}
-      {error && <img src={ErrorGif} alt="Error" />}
       {!isLoading && !error && (
         <Fragment>
           <Helmet><title>Math-Quiz App - SignUp</title></Helmet>

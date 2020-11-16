@@ -41,6 +41,14 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.resolve(__dirname, '/client', 'build', 'index.html'));
   });
 }
+//handleErrors
+app.use((error, req, res, next) => {
+  if (res.headerSent) {
+    return next(error);
+  }
+  res.status(error.code || 500);
+  res.json({ message: error.message || 'An unknown error occurred!' });
+});
 
 //server listen
 const port = process.env.PORT || 5000;

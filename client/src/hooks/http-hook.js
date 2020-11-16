@@ -33,7 +33,7 @@ const useHttpClient = () => {
         setIsLoading(false);
         return responseData;
       } catch (err) {
-        setError(err.message);
+        setError(err.message || 'Somthing Went wrong, Please try again.');
         setIsLoading(false);
         throw err;
       }
@@ -41,12 +41,16 @@ const useHttpClient = () => {
     [],
   );
 
+  const clearError = () => {
+    setError(null);
+  };
+
   useEffect(() => {
     return () => {
       activeHttpRequests.current.forEach((abortCtrl) => abortCtrl.abort());
     };
   }, []);
 
-  return { isLoading, error, sendRequest };
+  return { isLoading, error, sendRequest, clearError };
 };
 export default useHttpClient;

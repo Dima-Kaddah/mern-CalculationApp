@@ -20,6 +20,7 @@ body {
    background-color:#1d8706;
    border-radius: 10px;
    padding: 6px;
+   border: 0;
    cursor: pointer;
    color: #f8f8f8;
    background-color:#57b846;
