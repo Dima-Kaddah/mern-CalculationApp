@@ -27,7 +27,7 @@
    ### `npm start`
    
       
-3. in command line **client** run following command:
+3. in command line **mern-CalculationApp folder** run following command:
 
      ### `npm run dev`
       
