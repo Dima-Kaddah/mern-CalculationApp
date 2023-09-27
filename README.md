@@ -84,6 +84,10 @@ Calculation Quiz App with MERN stack
   ## for test admin routes:
   - `email : testadmin@app.com`
   - `password : test1234`
+ 
+  - ## for test user routes:
+  - `email : newuser@math.com`
+  - `password : newuser1234`
 
 # License
 
