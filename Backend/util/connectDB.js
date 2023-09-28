@@ -6,11 +6,11 @@ const DB_USER = process.env.DB_USER;
 const DB_PW = process.env.DB_PW;
 const DB_NAME = process.env.DB_NAME;
 const DB_URL = `mongodb+srv://${DB_USER}:${DB_PW}@clustermbd.wjb8o.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`;
-const DB_URL2 = process.env.DB_URL2;
+
 
 const connectDB = (server) => {
   mongoose
-    .connect(DB_URL2, {
+    .connect(DB_URL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useFindAndModify: false,
